@@ -29,7 +29,6 @@ Module Patch
 
         For i = 1 To 20
             If CheckPatchVersion(tmpVer) Then
-                Console.WriteLine("Check latest patch version..." & tmpVer)
                 i = 0
             End If
 

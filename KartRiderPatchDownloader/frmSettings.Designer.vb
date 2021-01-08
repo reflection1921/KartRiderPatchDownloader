@@ -121,6 +121,7 @@ Partial Class frmSettings
         'chkCopy
         '
         Me.chkCopy.AutoSize = True
+        Me.chkCopy.Enabled = False
         Me.chkCopy.Location = New System.Drawing.Point(6, 42)
         Me.chkCopy.Name = "chkCopy"
         Me.chkCopy.Size = New System.Drawing.Size(188, 16)

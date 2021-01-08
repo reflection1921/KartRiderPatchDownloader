@@ -22,7 +22,7 @@ Public Class frmSettings
         gbRegion.Enabled = False
         gbVersion.Enabled = True
 
-        Console.WriteLine("Select Region..." & cbRegion.Text)
+        Console.WriteLine("Select region..." & cbRegion.Text)
 
         patchVersion = ParseSavedVersion(locale)
 
@@ -30,7 +30,13 @@ Public Class frmSettings
 
     Private Sub btnCheckLatest_Click(sender As Object, e As EventArgs) Handles btnCheckLatest.Click
         patchVersion = CheckLatestPatchVersion(patchVersion)
+        txtVersion.Text = patchVersion
         File.WriteAllText(locale & ".dat", patchVersion)
+        Console.WriteLine("Select version..." & patchVersion)
+
+        gbVersion.Enabled = False
+        gbOption.Enabled = True
+        btnApply.Enabled = True
     End Sub
 
     Function ParseSavedVersion(_locale As String) As String
@@ -49,6 +55,34 @@ Public Class frmSettings
     End Function
 
     Private Sub btnCheckManually_Click(sender As Object, e As EventArgs) Handles btnCheckManually.Click
+        If CheckPatchVersion(txtVersion.Text) Then
+            patchVersion = txtVersion.Text
+            Console.WriteLine("Select version..." & patchVersion)
 
+            gbVersion.Enabled = False
+            gbOption.Enabled = True
+            btnApply.Enabled = True
+        Else
+            MsgBox("Invalid patch version.", vbCritical, "KRPD")
+        End If
+    End Sub
+
+    Private Sub chkExtractGZ_CheckedChanged(sender As Object, e As EventArgs) Handles chkExtractGZ.CheckedChanged
+        If chkExtractGZ.Checked = True Then
+            chkCopy.Enabled = True
+        Else
+            chkCopy.Enabled = False
+        End If
+    End Sub
+
+    Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click
+        isExtract = chkExtractGZ.Checked
+        If chkCopy.Enabled And chkCopy.Checked Then
+            isInstall = True
+        Else
+            isInstall = False
+        End If
+
+        Me.Close()
     End Sub
 End Class

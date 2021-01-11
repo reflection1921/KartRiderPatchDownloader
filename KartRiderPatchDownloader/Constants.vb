@@ -9,6 +9,5 @@
     Public isExtract As Boolean '//check extract?
     Public isInstall As Boolean '//check install?
 
-
     Public downloadFiles As List(Of String)
 End Module

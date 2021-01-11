@@ -83,6 +83,9 @@ Public Class frmSettings
             isInstall = False
         End If
 
+        Console.WriteLine("Extract *.gz..." & isExtract)
+        Console.WriteLine("Copy to KartRider install path..." & isInstall)
+
         Me.Close()
     End Sub
 End Class

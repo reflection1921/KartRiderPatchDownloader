@@ -26,15 +26,16 @@ Module Patch
     Public Function CheckLatestPatchVersion(ver As String) As String
 
         Dim tmpVer As String = ver
+        Dim latestVer As String = ver
 
         For i = 1 To 20
             If CheckPatchVersion(tmpVer) Then
                 i = 0
+                latestVer = tmpVer
             End If
-
             tmpVer += 1
         Next
 
-        Return tmpVer
+        Return latestVer
     End Function
 End Module

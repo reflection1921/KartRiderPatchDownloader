@@ -4,10 +4,15 @@ Imports System.Text
 
 Module Downloader
 
+    Dim _patchVersionPath As String
+
     Sub Main()
         Console.WriteLine("KartRider Patch Downloader (KR)")
+
         System.Windows.Forms.Application.EnableVisualStyles()
         System.Windows.Forms.Application.Run(New frmSettings)
+
+        _patchVersionPath = locale & "_" & patchVersion
 
         Console.Write("Get patch files list...")
 
@@ -22,17 +27,28 @@ Module Downloader
 
         Console.WriteLine("Create patch files directory.")
 
-        CreateDirectory("patch\" & patchVersion)
-        CreateDirectory("patch\" & patchVersion & "\Data")
-        CreateDirectory("patch\" & patchVersion & "\HackShield")
-        CreateDirectory("patch\" & patchVersion & "\BlackCipher")
-        CreateDirectory("patch\" & patchVersion & "\XignCode")
+        CreateDirectory("patch")
+        CreateDirectory("patch\" & _patchVersionPath)
+        CreateDirectory("patch\" & _patchVersionPath & "\Data")
+        CreateDirectory("patch\" & _patchVersionPath & "\HackShield")
+        CreateDirectory("patch\" & _patchVersionPath & "\BlackCipher")
+        CreateDirectory("patch\" & _patchVersionPath & "\XignCode")
 
         Console.WriteLine("Start download...")
 
         For i = 0 To downloadFiles.Count - 1
             DownloadFile(i)
         Next
+
+        '//Extract gz
+        If isExtract Then
+            For i = 0 To downloadFiles.Count - 1
+                Console.Write("Decompress " & downloadFiles(i) & ".gz...")
+                Decompress(New FileInfo("patch\" & _patchVersionPath & "\" & downloadFiles(i) & ".gz"))
+                File.Delete("patch\" & _patchVersionPath & "\" & downloadFiles(i) & ".gz")
+                Console.WriteLine("OK")
+            Next
+        End If
 
         Console.WriteLine("Download compelte. Press any key to exit.")
         Console.ReadLine()
@@ -42,7 +58,7 @@ Module Downloader
     Sub DownloadFile(i As Integer)
         Console.Write("Download " & downloadFiles(i) & ".gz...")
         Dim Client As New WebClient
-        Client.DownloadFile(New Uri(patchURL & patchVersion & "/" & downloadFiles(i).Replace("\", "/") & ".gz"), "patch\" & patchVersion & "\" & downloadFiles(i) & ".gz")
+        Client.DownloadFile(New Uri(patchURL & patchVersion & "/" & downloadFiles(i).Replace("\", "/") & ".gz"), "patch\" & _patchVersionPath & "\" & downloadFiles(i) & ".gz")
         Console.WriteLine("OK")
     End Sub
 

@@ -2,8 +2,6 @@
 
 Public Class frmSettings
 
-    Dim locale As String
-
     Private Sub btnRegionApply_Click(sender As Object, e As EventArgs) Handles btnRegionApply.Click
         '//tw: http://tw.cdnpatch.kartrider.beanfun.com/kartrider/(version)/files.nfo2 '//2095
         '//kr: "http://kart.dn.nexoncdn.co.kr/patch/" & ver & "/files.nfo2" '//4693
@@ -69,7 +67,7 @@ Public Class frmSettings
 
     Private Sub chkExtractGZ_CheckedChanged(sender As Object, e As EventArgs) Handles chkExtractGZ.CheckedChanged
         If chkExtractGZ.Checked = True Then
-            chkCopy.Enabled = True
+            '//chkCopy.Enabled = True
         Else
             chkCopy.Enabled = False
         End If
